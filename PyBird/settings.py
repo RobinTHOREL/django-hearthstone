@@ -25,7 +25,7 @@ SECRET_KEY = '*nv7022f3k%g_%uj6!u2@o!a1%h&5=65)8k6g*r@1c=tjf9%41'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.10.10.10', '127.0.0.1', '192.168.99.100']
+ALLOWED_HOSTS = ['10.10.10.10', '127.0.0.1', '192.168.99.100', 'localhost']
 
 
 # Application definition
@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'PyBird.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD' : 'demo',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
