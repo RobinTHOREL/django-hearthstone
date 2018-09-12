@@ -1,0 +1,146 @@
+{% load static %}
+{% load require %}
+{% load avatar_tags %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}PyBird{% endblock %}</title>    
+    <link rel="stylesheet" href="{% static 'fonts/icons/sharehub/style.css'%}"/>
+    <link rel="stylesheet" href="{% static 'fonts/icons/fontawesome/css/font-awesome.min.css'%}"/>
+    {% require_module 'app' %}
+    <link href="https://fonts.googleapis.com/css?family=Signika:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'vendor/magnificPopup/dist/magnific-popup.css'%}" type="text/css" />
+    <link rel="icon" type="image/png" href="{% static 'images/favicon/favicon.png' %}" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="{% static 'vendor/datePicker/css/datepicker.css' %}"/>
+
+</head>
+<body>
+{% block nav %}
+           {% if user.is_authenticated %}
+    <header>
+        <div class="sh-header">
+            <div class="container">
+                <h1>
+                    <a href="{% url 'home' %}" class="sh-logo">
+                        <img src="{% static 'images/logo/logo.png' %}" alt="logo">
+                    </a>
+                </h1>
+                <div class="sh-header__control">
+                    <a href="#" class="sh-header__btn-notification sh-btn-icon"><i class="icon-Notification"></i></a>
+                </div>
+               <div class="sh-header__control">
+                    <a href="#" class="sh-header__btn-comment sh-btn-icon"><i class="icon-Comment"></i></a>
+                </div>
+                <div class="sh-user">
+                    <div class="sh-user__head">
+                        <p>3 New Notifications</p>
+                        <a href="#" class="sh-user__close sh-btn-icon"><i class="icon-Cancel"></i></a>
+                    </div>
+                    <div class="sh-user__content">
+                        <div>
+                            <div><a href="#"><img src="{% static 'fonts/icons/sharehub/svg/Badge_03.svg'%}" alt=""></a></div>
+                            <div>
+                                <div>New Badge Earned</div>
+                                <span>Get 1K upvotes on your post</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div><a href="#">
+                                <img src="{% static 'images/avatars/user-02.jpg' %}" alt="">
+                            </a></div>
+                            <div>
+                                <div>Life choices of my cat</div>
+                                <span>Earned <i class="icon-Upvote"></i> 210</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sh-user__footer">
+                        <a href="#" class="sh-comments__avatar sh-avatar"><img src="{% static 'images/avatars/avatar-01.png'%}" alt=""></a>
+                        <div>
+                            <a href="#">bastion . </a>
+                            <span>1 hour ago</span>
+                            <p>Hey, how’s it going nathun?</p>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    require(['app'], function () {
+                        require(['modules/menu']);
+                    });
+                </script>
+
+                <div class="sh-header__control">
+                    <a href="{% url 'profile' user.id %}" class="sh-header__avatar sh-avatar">
+                        {% avatar user %}
+                    </a>
+                </div>
+               <div class="sh-header__control">
+                    <a href="#" class="sh-header__btn-upload sh-btn"><i class="icon-Comment"></i> Tweet</a>
+                </div>
+               <div class="sh-header__control">
+                    <a href="{% url 'logout' %}" class="set-btn"><i class="icon-Comment"></i> Logout</a>
+                </div>
+                <div class="sh-upload"> <!-- TWEET HERE -->
+                    <form method="post">
+                        <div class="sh-upload__head">
+                                <input type="text" class="form-control ttg-border-none" name="content" placeholder="Tweetez" />
+                                {% csrf_token %}
+                        </div>
+                        <div class="sh-upload__footer">
+                            <input class="sh-btn" type="submit">
+                        </div>
+                    </form>
+                </div>
+        </div>
+        <script>
+            require(['app'], function () {
+                require(['modules/main']);
+                require(['modules/upload']);
+            });
+        </script>
+            </div>
+        </div>
+    </header>
+        {% else %}
+
+      <header>
+        <div class="sh-header">
+            <div class="container">
+                <div class="row">
+                        <h1>
+                                <a href="{% url 'home' %}" class="sh-logo">
+                                    <img src="{% static 'images/logo/logo.png' %}" alt="logo">
+                                </a>
+                            </h1>
+                            <div class="sh-header__control">
+                                <a href="{% url 'signup' %}" class=" sh-btn"><i class="fa fa-registered"></i> Register</a>
+                            </div>
+                           <div class="sh-header__control">
+                                <a href="{% url 'login' %}" class="set-btn"><i class="fa fa-sign-in"></i> Login</a>
+                            </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </header>
+{% endblock %}
+
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/custom.js' %}"></script>
+</body>
+</html>

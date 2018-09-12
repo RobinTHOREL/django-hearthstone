@@ -1,0 +1,144 @@
+{% extends "PyBirdApp/base.html" %}
+{% load static %}
+{% block title %}PyBird | Home{% endblock %}
+{% load avatar_tags %}
+
+{% block content %}
+
+<div class="sh-content-head">
+
+
+</div>
+<!--sections-->
+<div class="row">
+    <!--section-->
+        {% if user.is_authenticated %}
+        <div class="sh-section__item col-lg-3">
+        <div class="sh-section">
+            <div class="sh-section__head">
+                <a href="{% url 'profile' user.id %}" class="sh-section__avatar sh-avatar">
+                    {% avatar user %}
+                </a>
+                <div>
+                    <h2>
+                        <a href="{% url 'profile' user.id %}" class="sh-section__name">{{ user }}</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="sh-section__content sh-head-user__info-statistic">
+                <table>
+                    <tr>
+                        <td><div class="sh-btn-icon"><i class="icon-Comment"></i></div></td>
+                        <td><div class="sh-btn-icon"><i class="icon-Followers"></i></div></td>
+                        <td><div class="sh-btn-icon"><i class="icon-Following"></i></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="sh-btn-icon"><span>{{ nbpost }}</span></div></td>
+                        <td><div class="sh-btn-icon"><span><a href="{% url 'followers' user.id %}">{{ nbfollower }}</a></span></div></td>
+                        <td><div class="sh-btn-icon"><span><a href="{% url 'followeds' user.id %}">{{ nbfollowed }}</a></span></div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+  <div class="sh-section__item col-lg-6">
+            {% for p in posts %}
+                    {% for userFollowed in listFollowed %}
+                        {% if userFollowed.id_followed == p.id_author.id %}
+
+                    <div class="sh-section">
+                        <div class="sh-section__head">
+                            <a href="{% url 'profile' p.id_author.id %}" class="sh-section__avatar sh-avatar">
+                                {% avatar p.id_author  %}
+                            </a>
+                            <div>
+                                <a href="{% url 'profile' p.id_author.id %}" class="sh-section__name">{{ p.id_author }}</a>
+                                <span class="sh-section__passed">{{ p.created_at|date:"M/d"|lower }}</span>
+                            </div>
+                        </div>
+                        <div class="sh-section__content">
+                            <p>{{ p.post_content }}</p>
+                            <!--<div class="sh-section__image">
+                                <a href="single_post.html">
+                                    <img src="{% static 'images/microphone-1209816_1920.jpg'%}" alt="">
+                                </a>
+                            </div>-->
+                        </div>
+                    </div>
+                    {% endif %}
+                 {% endfor %}
+             {% empty %}
+                <li>Sorry, no tweet avaiable... Start by follow some body?</li>
+            {% endfor %}
+        </div>
+    {% else %} <!-- Pour l'user non authentifié -->
+    <div class="sh-section__item col-lg-3">
+    </div>
+                 <div class="sh-section__item col-lg-6">
+                {% for p in posts %}
+                        <div class="sh-section">
+                        <div class="sh-section__head">
+                            <a href="{% url 'profile' p.id_author.id %}" class="sh-section__avatar sh-avatar">
+                               <!-- <img src="{% static 'images/avatars/avatar-02.png'%}" alt=""> -->
+                                {% avatar p.id_author %}
+                            </a>
+                            <div>
+                                <a href="{% url 'profile' p.id_author.id %}" class="sh-section__name">{{ p.id_author }}</a>
+                                <span class="sh-section__passed">{{ p.created_at|date:"M/d"|lower }}</span>
+                            </div>
+                            <a href="#" class="sh-section__link sh-btn-icon"><i class="icon-Link"></i></a>
+                        </div>
+                        <div class="sh-section__content">
+                            <p>{{ p.post_content }}</p>
+                            <!--<div class="sh-section__image">
+                                <a href="single_post.html">
+                                    <img src="{% static 'images/microphone-1209816_1920.jpg'%}" alt="">
+                                </a>
+                            </div>-->
+                        </div>
+                        <div class="sh-section__footer">
+                            <a href="#" class="sh-section__btn-like sh-btn-icon"><i class="icon-Favorite_Full"></i><span><!--1,274--></span></a>
+                            <a href="#" class="sh-section__btn-comment sh-btn-icon"><i class="icon-Comment_Full"></i><span><!--982--></span></a>
+                            <a href="#" class="sh-section__btn-share sh-btn-icon"><i class="icon-Share"></i></a>
+                        </div>
+                    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="sh-section__item col-lg-3">
+       <!-- {% if user.is_authenticated %} -->
+        <div class="sh-section">
+            <div class="sh-section__head">
+                <table>
+               {% for user_all in list_user %}
+                    {% if request.user.username != user_all.username %}
+                        <tr class="sh-suggest">
+                            <td>
+                                <a href="{% url 'profile' user_all.id %}" class="sh-section__avatar2 sh-avatar">
+                                   <!-- <img src="{% static 'images/avatars/avatar-09.png'%}" alt=""> -->
+                                    {% avatar user_all.username %}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'profile' user_all.id %}" class="sh-section__name">{{ user_all.username }}</a>
+                            </td>
+                            {% for userFollowed in listFollowed %}
+                                {% if userFollowed.id_followed == user_all.id %}
+                                    <td>
+                                        <div class="sh-head-user__name">
+                                            <i><img src="{% static 'fonts/icons/sharehub/svg/Verified.svg'%}" alt=""></i>
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endif %}
+            {% endfor %}
+                </table>
+            </div>
+        </div>
+        <!-- {% endif %} -->
+    </div>
+</div>
+{% endblock %}
