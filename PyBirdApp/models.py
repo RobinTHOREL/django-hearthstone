@@ -24,3 +24,9 @@ class Post(models.Model):
 class Follow(models.Model):
     id_follower = models.IntegerField()
     id_followed = models.IntegerField()
+
+class Hero(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(max_length=30, blank=False)
+    playerClass = models.TextField(max_length=50, blank=False, default="NaN")
+

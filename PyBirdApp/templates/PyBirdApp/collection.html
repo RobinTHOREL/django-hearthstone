@@ -1,0 +1,14 @@
+{% extends "PyBirdApp/base.html" %}
+{% load static %}
+{% load require %}
+{% block title %}PyBird | Collection of {{ id_user }}{% endblock %}
+{% block content %}
+{% load avatar_tags %}
+
+    <h1>Collection page {{ id_user }}</h1>    
+
+    <pre>
+        {{ data }}
+    </pre>
+
+{% endblock %}

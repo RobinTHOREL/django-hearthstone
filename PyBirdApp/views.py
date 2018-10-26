@@ -137,4 +137,6 @@ def follow(request, id_user):
     tmp = request.META['HTTP_REFERER']
     return redirect(tmp)
 
+def collection(request, id_user):
+    return render(request, 'PyBirdApp/collection.html', {'id_user' : id_user})
 

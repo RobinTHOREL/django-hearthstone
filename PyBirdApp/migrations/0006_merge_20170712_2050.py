@@ -8,7 +8,6 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('PyBirdApp', '0004_profile_avatar'),
         ('PyBirdApp', '0005_auto_20170710_2108'),
     ]
 

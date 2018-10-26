@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^followers/(\d+)$', views.followers, name='followers'), #Page des personnes qui suivent arg = id_user
     url(r'^followeds/(\d+)$', views.followeds, name='followeds'), #Page des que = id_user suit
 
+    url(r'^collection/(\d+)$', views.collection, name='collection'), #Page des que = id_user suit
 
 
 ]
